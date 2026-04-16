@@ -1,14 +1,20 @@
 using Godot;
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 
 public partial class PlayerMove : CharacterBody3D
 {
-	public const float INITIAL_VELOCITY = 1.0f;
-	private const float MAXIMUM_SPEED = 5.0f;
-	private const float BOOST = 0.1f;
-	private const float BRAKING = 0.1f;
-	private const float JUMP_VELOCITY = 4.5f;
+	[Export]
+	private float INITIAL_VELOCITY = 1.0f;
+	[Export]
+	private float MAXIMUM_SPEED = 5.0f;
+	[Export]
+	private float BOOST = 0.1f;
+	[Export]
+	private float BRAKING = 0.1f;
+	[Export]
+	private float JUMP_VELOCITY = 4.5f;
 	public override void _Ready()
 	{
 		Input.MouseMode = Input.MouseModeEnum.Captured;
@@ -49,8 +55,6 @@ public partial class PlayerMove : CharacterBody3D
 
 		if (direction != Vector3.Zero)
 		{
-			// velocity.X = velocity.X == 0 ? direction.X * INITIAL_VELOCITY : direction.X * Mathf.MoveToward(Mathf.Abs(Velocity.X), MAXIMUM_SPEED, BOOST);
-			// velocity.Z = velocity.Z == 0 ? direction.Z * INITIAL_VELOCITY : direction.Z * Mathf.MoveToward(Mathf.Abs(Velocity.Z), MAXIMUM_SPEED, BOOST);
 
 			if (velocity.X == 0)
 				velocity.X = direction.X * INITIAL_VELOCITY;
@@ -66,8 +70,6 @@ public partial class PlayerMove : CharacterBody3D
 				velocity.Z = Mathf.MoveToward(velocity.Z, 0, BRAKING);
 			else
 				velocity.Z = direction.Z * Mathf.MoveToward(Mathf.Abs(Velocity.Z), MAXIMUM_SPEED, BOOST);
-
-			
 		}
 		else
 		{
