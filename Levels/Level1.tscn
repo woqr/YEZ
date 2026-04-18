@@ -1,0 +1,154 @@
+[gd_scene format=3 uid="uid://dw7j1hsdhtqa2"]
+
+[ext_resource type="Shader" uid="uid://cvpmljg484q2q" path="res://Levels/Overlay.gdshader" id="1_7fl83"]
+[ext_resource type="Script" uid="uid://d1yhty1lrvtg1" path="res://addons/zylann.hterrain/hterrain.gd" id="1_iotdp"]
+[ext_resource type="Texture2D" uid="uid://bn5i0mtf8be4h" path="res://Textures/Ground/Forest_ground.png" id="1_w77jt"]
+[ext_resource type="Resource" uid="uid://beipeec0pekq3" path="res://DataDirectoryTerrain/Level1/data.hterrain" id="2_nutv8"]
+[ext_resource type="Script" uid="uid://dynrifvwyibdy" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="3_05pb0"]
+[ext_resource type="AudioStream" uid="uid://bgimvlisoud6t" path="res://Sounds/Rain/Rain.mp3" id="3_tuji2"]
+[ext_resource type="Script" uid="uid://bci5yhmglmnci" path="res://addons/zylann.hterrain/hterrain_detail_layer.gd" id="5_dl8mf"]
+[ext_resource type="Texture2D" uid="uid://bhfjd3owy3sji" path="res://Models/Grass/texture/Grass_Texture.png" id="6_dl8mf"]
+[ext_resource type="Texture2D" uid="uid://6jmdwj3vn6m0" path="res://addons/zylann.hterrain/tools/icons/icon_detail_layer_node.svg" id="6_xcayt"]
+[ext_resource type="ArrayMesh" uid="uid://dfq7mxkmapmvr" path="res://Models/Grass/Grass_Mesh.tres" id="7_5g41i"]
+[ext_resource type="PackedScene" uid="uid://cmqtpadlq0spn" path="res://Characters/Stalker2/YEZ_Stalker2Anims.fbx" id="9_5g41i"]
+[ext_resource type="AudioStream" uid="uid://dlsjxexr74jxk" path="res://Music/Level1/Ambient/YEZ_Level1_AmbienceDayF.mp3" id="11_p5226"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_3anf8"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_fhqol"]
+sky_material = SubResource("ProceduralSkyMaterial_3anf8")
+
+[sub_resource type="Environment" id="Environment_iotdp"]
+background_mode = 2
+background_energy_multiplier = 0.59
+sky = SubResource("Sky_fhqol")
+ambient_light_energy = 1.41
+tonemap_mode = 2
+fog_enabled = true
+fog_light_color = Color(0.31061712, 0.31061712, 0.31061706, 1)
+fog_light_energy = 0.44
+fog_density = 0.1826
+fog_aerial_perspective = 0.153
+adjustment_enabled = true
+adjustment_brightness = 1.78
+adjustment_contrast = 1.03
+adjustment_saturation = 0.59
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7fl83"]
+render_priority = 0
+shader = ExtResource("1_7fl83")
+shader_parameter/pixel_size = 2.0
+shader_parameter/levels = 29.0
+shader_parameter/gamma = Vector2(0.125, 10.915)
+
+[sub_resource type="QuadMesh" id="QuadMesh_5g41i"]
+material = SubResource("ShaderMaterial_7fl83")
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7fl83"]
+emission_shape = 3
+emission_box_extents = Vector3(20, 5, 20)
+direction = Vector3(1, -1, 0)
+spread = 10.0
+initial_velocity_min = 5.0
+initial_velocity_max = 5.0
+collision_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p5226"]
+cull_mode = 2
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.42365062, 0.42365065, 0.42365062, 0.30980393)
+metallic_specular = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_p5226"]
+material = SubResource("StandardMaterial3D_p5226")
+size = Vector2(0.01, 0.2)
+
+[sub_resource type="Resource" id="Resource_dl8mf"]
+script = ExtResource("3_05pb0")
+mode = 0
+textures = [[ExtResource("1_w77jt"), null], [null, null]]
+
+[node name="Level1" type="Node3D" unique_id=785660544]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1556164457]
+environment = SubResource("Environment_iotdp")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2077971253]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+light_energy = 0.447
+light_volumetric_fog_energy = 1.855
+light_specular = 0.0
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=572416721]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.418892, 34.464336, -33.530098)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D" unique_id=977649767]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.531311e-05, 0.0017852783, -0.40111542)
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_5g41i")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Camera3D" unique_id=1825653773]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.904, 0)
+amount = 15555
+preprocess = 3.0
+visibility_aabb = AABB(-50, -50, -50, 50, 50, 50)
+process_material = SubResource("ParticleProcessMaterial_7fl83")
+draw_pass_1 = SubResource("QuadMesh_p5226")
+
+[node name="YezLevel1AmbienceDayF" type="AudioStreamPlayer3D" parent="Camera3D" unique_id=1849010012]
+stream = ExtResource("11_p5226")
+volume_db = -25.896
+max_db = -12.111
+autoplay = true
+playback_type = 1
+parameters/looping = true
+
+[node name="Rain" type="AudioStreamPlayer3D" parent="Camera3D" unique_id=1658998285]
+stream = ExtResource("3_tuji2")
+volume_db = 3.237
+max_db = 6.0
+autoplay = true
+playback_type = 1
+parameters/looping = true
+
+[node name="HTerrain" type="Node3D" parent="." unique_id=1653730140]
+script = ExtResource("1_iotdp")
+ambient_wind = 0.25
+centered = true
+_terrain_data = ExtResource("2_nutv8")
+chunk_size = 32
+collision_enabled = true
+collision_layer = 1
+collision_mask = 1
+shader_type = "Classic4Lite"
+custom_shader = null
+custom_globalmap_shader = null
+texture_set = SubResource("Resource_dl8mf")
+render_layers = 1
+cast_shadow = 1
+shader_params/u_ground_uv_scale = 1.075
+shader_params/u_depth_blending = true
+shader_params/u_triplanar = false
+shader_params/u_tile_reduction = null
+metadata/_custom_type_script = "uid://d1yhty1lrvtg1"
+
+[node name="HTerrainDetailLayer" type="Node3D" parent="HTerrain" unique_id=1051854948]
+script = ExtResource("5_dl8mf")
+texture = ExtResource("6_dl8mf")
+density = 5.79
+instance_mesh = ExtResource("7_5g41i")
+render_layers = 15
+shader_params/u_globalmap_tint_bottom = 0.0
+shader_params/u_globalmap_tint_top = null
+shader_params/u_bottom_ao = null
+shader_params/u_instance_scale = Vector3(2.5, 2.5, 2.5)
+shader_params/u_roughness = 455.0
+metadata/_editor_icon = ExtResource("6_xcayt")
+
+[node name="YEZ_Stalker2Anims" parent="." unique_id=429141662 instance=ExtResource("9_5g41i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.25383, 33.102497, -34.78438)

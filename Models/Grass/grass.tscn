@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://d2whtl08pwteu"]
+
+[ext_resource type="PackedScene" uid="uid://7l66qelbt3sm" path="res://Models/Grass/Grass.fbx" id="1_jfti5"]
+[ext_resource type="ArrayMesh" uid="uid://dfq7mxkmapmvr" path="res://Models/Grass/Grass_Mesh.tres" id="3_uuut5"]
+
+[node name="Grass" unique_id=93747745 instance=ExtResource("1_jfti5")]
+
+[node name="Grass" parent="." index="0" unique_id=898276046]
+mesh = ExtResource("3_uuut5")

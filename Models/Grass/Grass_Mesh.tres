@@ -1,0 +1,53 @@
+[gd_resource type="ArrayMesh" format=4 uid="uid://dfq7mxkmapmvr"]
+
+[ext_resource type="Texture2D" uid="uid://bhfjd3owy3sji" path="res://Models/Grass/texture/Grass_Texture.png" id="1_3mbdf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jfti5"]
+resource_name = "Grass"
+transparency = 4
+cull_mode = 2
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_3mbdf")
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.0
+texture_filter = 0
+texture_repeat = false
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rimq5"]
+transparency = 1
+cull_mode = 2
+albedo_texture = ExtResource("1_3mbdf")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_qjvfx"]
+_surfaces = [{
+"aabb": AABB(-0.12727925, -2.1457671e-08, -0.12727924, 0.2545585, 0.36, 0.25455847),
+"format": 34359742465,
+"index_count": 12,
+"index_data": PackedByteArray("AAABAAIAAgADAAAABAAFAAYABgAHAAQA"),
+"material": SubResource("StandardMaterial3D_rimq5"),
+"name": "Grass",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("elUCvutRuD57VQK+flUCvnA9CjN7VQK+elUCPutRuLJ7VQI+flUCPupRuD57VQI+e1UCvutRuD55VQI+fFUCvnA9CjN9VQI+e1UCPutRuLJ5VQK+fFUCPupRuD59VQK+")
+}]
+blend_shape_mode = 0
+
+[resource]
+resource_name = "Plane_001"
+_surfaces = [{
+"aabb": AABB(-0.12727925, -2.1457671e-08, -0.12727924, 0.2545585, 0.36, 0.25455847),
+"attribute_data": PackedByteArray("AACAP+C0tDwAAIA/Dw93PwAAAAAPD3c/AAAAAOC0tDwAAIA/4LS0PAAAgD8PD3c/AAAAAA8Pdz8AAAAA4LS0PA=="),
+"format": 34359742487,
+"index_count": 12,
+"index_data": PackedByteArray("AAABAAIAAgADAAAABAAFAAYABgAHAAQA"),
+"material": SubResource("StandardMaterial3D_jfti5"),
+"name": "Grass",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("elUCvutRuD57VQK+flUCvnA9CjN7VQK+elUCPutRuLJ7VQI+flUCPupRuD57VQI+e1UCvutRuD55VQI+fFUCvnA9CjN9VQI+e1UCPutRuLJ5VQK+fFUCPupRuD59VQK+////PwAA/9////8/AAD/3////z8AAP/f////PwAA/98AAP8//z//vwAA/z//P/+/AAD/P/8//78AAP8//z//vw==")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_qjvfx")
