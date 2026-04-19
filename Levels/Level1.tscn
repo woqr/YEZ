@@ -140,7 +140,8 @@ metadata/_custom_type_script = "uid://d1yhty1lrvtg1"
 [node name="HTerrainDetailLayer" type="Node3D" parent="HTerrain" unique_id=1051854948]
 script = ExtResource("5_dl8mf")
 texture = ExtResource("6_dl8mf")
-density = 5.79
+view_distance = 58.865
+density = 3.044
 instance_mesh = ExtResource("7_5g41i")
 render_layers = 15
 shader_params/u_globalmap_tint_bottom = 0.0
