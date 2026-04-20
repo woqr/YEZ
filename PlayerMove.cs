@@ -6,15 +6,16 @@ using System.Diagnostics;
 public partial class PlayerMove : CharacterBody3D
 {
 	[Export]
-	private float INITIAL_VELOCITY = 1.0f;
+	private float _initialVelocity = 5.0f;
+
+	private float _currentVelocity = 0f;
+
 	[Export]
-	private float MAXIMUM_SPEED = 5.0f;
+	private float _acceleration = 13.0f;
+
 	[Export]
-	private float BOOST = 0.1f;
-	[Export]
-	private float BRAKING = 0.1f;
-	[Export]
-	private float JUMP_VELOCITY = 4.5f;
+	private float _jumpVelocity = 6.5f;
+
 	public override void _Ready()
 	{
 		Input.MouseMode = Input.MouseModeEnum.Captured;
@@ -22,14 +23,26 @@ public partial class PlayerMove : CharacterBody3D
 
 	public override void _Input(InputEvent @event)
 	{
-		if (@event is InputEventMouseMotion e)
+		if (@event is InputEventMouseMotion eventMouseNotion)
 		{
-			var dx = -e.Relative.X * 0.005;
-			var dy = -e.Relative.Y * 0.005;
+			var dx = -eventMouseNotion.Relative.X * 0.005;
+			var dy = -eventMouseNotion.Relative.Y * 0.005;
 			RotateY((float)dx);
 
 			Camera3D cam = FindChild("Camera3D") as Camera3D;
 			cam.Rotation = new Vector3((float)Mathf.Clamp(cam.Rotation.X + dy, -Math.PI / 2, Math.PI / 2), 0, 0);
+		}
+		if (@event is InputEventKey inputEventKey)
+		{
+			switch (inputEventKey.Keycode)
+			{
+				case Key.Escape:
+					Input.MouseMode = Input.MouseModeEnum.Visible;
+					break;
+				case Key.L:
+					Input.MouseMode = Input.MouseModeEnum.Captured;
+					break;
+			}
 		}
 	}
 
@@ -39,43 +52,32 @@ public partial class PlayerMove : CharacterBody3D
 	{
 		Vector3 velocity = Velocity;
 
-		// Add the gravity.
 		if (!IsOnFloor())
 			velocity += GetGravity() * (float)delta;
 
-
-		// Handle Jump.
 		if (Input.IsActionJustPressed("SPACE") && IsOnFloor())
-			velocity.Y = JUMP_VELOCITY;
+			velocity.Y = _jumpVelocity;
 
-		// Get the input direction and handle the movement/deceleration.
-		// As good practice, you should replace UI actions with custom gameplay actions.
 		Vector2 inputDir = Input.GetVector("MOVE_LEFT", "MOVE_RIGHT", "MOVE_FORWARD", "MOVE_BACKWARD");
 		Vector3 direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
 
 		if (direction != Vector3.Zero)
 		{
-
-			if (velocity.X == 0)
-				velocity.X = direction.X * INITIAL_VELOCITY;
-			if (velocity.Z == 0)
-				velocity.Z = direction.Z * INITIAL_VELOCITY;
-
-			if (direction.X<0 && velocity.X>0 || direction.X>0 && velocity.X<0)
-				velocity.X=Mathf.MoveToward(velocity.X, 0, BRAKING);
+			if (Input.IsActionPressed("SHIFT") && inputDir.Y < 0 && IsOnFloor())
+				_currentVelocity = _acceleration;
 			else
-				velocity.X=direction.X * Mathf.MoveToward(Mathf.Abs(Velocity.X), MAXIMUM_SPEED, BOOST);
+				_currentVelocity = _initialVelocity;
 
-			if (direction.Z<0 && velocity.Z>0 || direction.Z>0 && velocity.Z<0)
-				velocity.Z = Mathf.MoveToward(velocity.Z, 0, BRAKING);
-			else
-				velocity.Z = direction.Z * Mathf.MoveToward(Mathf.Abs(Velocity.Z), MAXIMUM_SPEED, BOOST);
+			velocity.X = direction.X * _currentVelocity;
+			velocity.Z = direction.Z * _currentVelocity;
 		}
-		else
+		else if(IsOnFloor())
 		{
-			velocity.X = Mathf.MoveToward(Velocity.X, 0, BRAKING);
-			velocity.Z = Mathf.MoveToward(Velocity.Z, 0, BRAKING);
+			velocity.X = Mathf.MoveToward(Velocity.X, 0, _acceleration);
+			velocity.Z = Mathf.MoveToward(Velocity.X, 0, _acceleration);
 		}
+
+		GD.Print($"{velocity.X} | {velocity.Z}");
 
 		Velocity = velocity;
 		MoveAndSlide();
